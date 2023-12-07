@@ -6,6 +6,7 @@ import Registration from './Registration'
 import SignInPage from './SingInPage';
 import Profile from './Profile';
 import AboutScreen from './AboutScreen';
+import Data from './Data';
 
 
 const Stack = createNativeStackNavigator();
@@ -28,10 +29,11 @@ const Stack = createNativeStackNavigator();
     <NavigationContainer>
     <Stack.Navigator initialRouteName="Welcome">
       
-      <Stack.Screen name ="Welcome" component={AboutScreen}/>
-      <Stack.Screen name ="Profile" component={Profile}/>
+      <Stack.Screen name ="Welcome" options={{headerShown: false,}} component={AboutScreen}/>
+      <Stack.Screen name ="Profile" component={Profile} />
       <Stack.Screen name ="Registration" component={Registration}/>
       <Stack.Screen name ="SingInPage" component={SignInPage}/>
+      <Stack.Screen name ="Data" component={Data}/>
 
     </Stack.Navigator>
     </NavigationContainer>

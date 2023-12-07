@@ -12,16 +12,18 @@ const AboutScreen =({navigation}) =>{
 
 
     return(
-        <View style={{flexDirection: 'column', flex: 1,alignItems: 'center', }}>
-        <Text> Thank you</Text>
+        <View style={{flexDirection: 'column', flex: 0.5, alignItems: 'center',justifyContent: 'center',height: "100%", }}>
+        <Text style={{fontSize: 20, color: "black", marginBottom: 5,}}> WELCOME</Text>
 
-        <View style={{flexDirection:'row', justifyContent:"space-evenly",padding:"10px 20px",borderadius: "10px",}}>
+        <View style={{flexDirection:'row', justifyContent:"space-evenly",padding:"20%",borderadius: "10px",}}>
 
         <Button title="Login"  color='red' onPress={() => navigation.navigate('SingInPage')} />
         <View style={{ width: 20 }} /> 
         <Button title="Signup" color='blue' /*disabled*/ onPress={() => navigation.navigate('Registration')} />
         <View style={{ width: 20 }} />
         <Button title="Profile" color='blue' /*disabled*/ onPress={() => navigation.navigate('Profile')} />
+        <View style={{ width: 20 }} />
+        <Button title="Data" color='blue' /*disabled*/ onPress={() => navigation.navigate('Data')} />
         </View>
         </View>
 

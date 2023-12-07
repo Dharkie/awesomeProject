@@ -2,26 +2,64 @@
 import React from 'react';
 import { View, Text, TextInput, Button, StyleSheet } from 'react-native';
 import { ImageBackground } from 'react-native';
+import { useState } from 'react';
+import { useNavigation } from '@react-navigation/native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 
 const SignInPage = () => {
+
+  const [error, setError]=useState('')
+  const[username, setUsername]=useState('')
+  const[Password, setPassword]=useState('')
+  const navigation = useNavigation();
+
+  function login()
+  {
+    if (!username || !Password) {
+      setError("Please enter both username and password");
+      return;
+    }
+    fetch('http://localhost:8080/login', {
+      method:'POST',
+      headers:{'Accept':'application/json', 'Content-Type':'application/json'},
+      body:JSON.stringify({
+        "userName": username,
+        "password": Password,
+      })
+    })//eo Feetch function
+    .then(Resp=> {
+      if(!Resp.ok)
+      {
+        if (Resp.status === 401) 
+        {
+          setError(`${Resp.status} Wrong userName`);
+        } 
+      }
+      else
+      {  
+        navigation.navigate('Profile', {username})
+      }
+    })
+  }//eo login function
+
+  
   return (
-    <ImageBackground source={{uri: 'https://cdn.vox-cdn.com/thumbor/Ku3bTCLUoegr66kT2LZzPWuVs8s=/0x0:1200x600/1820x1213/filters:focal(561x40:753x232):format(webp)/cdn.vox-cdn.com/uploads/chorus_image/image/65381399/joker2.0.jpg'}}
-     resizeMode="cover" style={{flex: 1,
-    justifyContent: 'center', height: "700px",}}>
-    <View style={{flex: 0.5,justifyContent: 'center',alignItems: 'center',height: "200px",}}>
-    <Text style={{fontSize: 50, color: "white", marginBottom: 5,}}>Login</Text>
-    <TextInput placeholder="Email" style={styles.input} />
-    <TextInput placeholder="Password" secureTextEntry style={styles.input} />
-    <View style={{flexDirection:'row', justifyContent:"space-evenly",padding:"10px 20px",borderadius: "10px",}}>
-    <Button title="Login"  color='red' onPress={() => {}} />
+    <View style={{flex: 0.5,justifyContent: 'center',alignItems: 'center',height: "100%",}}>
+      <Text style={{fontSize: 20, color: "black", marginBottom: 5,}}> LOGIN</Text>
+    <Text style={{fontSize: 15, color: "red", marginBottom: 5,}}>{error}</Text>
+    <TextInput placeholder= 'username' required style={styles.input} onChangeText={(text)=>{ setUsername(text)}} value={username}/>
+    <TextInput placeholder='password' required secureTextEntry style={styles.input} onChangeText={(text)=>{setPassword(text)}} value= {Password} />
+    <View style={{flexDirection:'row', justifyContent:"space-evenly",padding:"2%",borderadius: "2%",}}>
+    <Button title="Login"  color='red' onPress={() => login()} />
     <View style={{ width: 20 }} /> 
-    <Button title="Signup" color='blue' /*disabled*/ onPress={() => {}} />
+    <Button title="Signup" color='blue' /*disabled*/ onPress={() => {navigation.navigate('Registration')}} />
     </View>
     </View>
-    </ImageBackground>
     
   );
 };
+
 
 const styles = StyleSheet.create({
   
